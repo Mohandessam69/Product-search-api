@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const { query } = req.query;
+  const query = req.query.query;
 
   try {
     const response = await fetch(
@@ -8,19 +8,12 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // 🔥 CORS FIX كامل
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Headers", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+    // 🔥 مهم جدًا: رجّع JSON بسيط
+    const results = data.shopping_results || [];
 
-    // 👇 مهم جدًا
-    if (req.method === "OPTIONS") {
-      return res.status(200).end();
-    }
-
-    res.status(200).json(data.shopping_results || []);
+    return res.status(200).json(results);
 
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    return res.status(500).json({ error: "error" });
   }
 }
