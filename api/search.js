@@ -8,9 +8,15 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // 🔥 أهم سطرين (حل المشكلة)
+    // 🔥 CORS FIX كامل
     res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET");
+    res.setHeader("Access-Control-Allow-Headers", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+
+    // 👇 مهم جدًا
+    if (req.method === "OPTIONS") {
+      return res.status(200).end();
+    }
 
     res.status(200).json(data.shopping_results || []);
 
