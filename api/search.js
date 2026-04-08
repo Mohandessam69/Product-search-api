@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   const { query } = req.query;
   
   const response = await fetch(
-    `https://serpapi.com/search.json?engine=google_shopping&q=${encodeURIComponent(query)}&api_key=${process.env.SERPAPI_KEY}`
+    `https://serpapi.com/search?engine=google_shopping&q=${encodeURIComponent(query)}&api_key=${process.env.SERPAPI_KEY}`
   );
   
   const data = await response.json();
